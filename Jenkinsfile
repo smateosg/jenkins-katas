@@ -7,20 +7,25 @@ pipeline {
   }
   stages {
     stage('Parallel execution') {
-      steps {
-        sh 'echo "Parallel execution"'
-      }
-    }
-
-    stage('Compilar aplicacion') {
-      agent {
-        docker {
-          image 'gradle:jdk11'
+      parallel {
+        stage('Parallel execution') {
+          steps {
+            sh 'echo "Parallel execution"'
+          }
         }
 
-      }
-      steps {
-        sh 'ci/build-app.sh'
+        stage('Build App') {
+          agent {
+            docker {
+              image 'gradle:jdk11'
+            }
+
+          }
+          steps {
+            sh 'ci/build-app.sh'
+          }
+        }
+
       }
     }
 
