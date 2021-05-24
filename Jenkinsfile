@@ -9,6 +9,7 @@ pipeline {
     stage('Parallel execution') {
       parallel {
         stage('Hello') {
+          agent any
           steps {
             sh 'echo "Hello"'
           }
